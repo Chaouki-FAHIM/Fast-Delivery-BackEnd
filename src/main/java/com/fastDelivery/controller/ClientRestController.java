@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController("client_controller")
 @RequestMapping("/api/clients")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ClientRestController implements IController<ClientReqDTO,Long> {
 
     @Override

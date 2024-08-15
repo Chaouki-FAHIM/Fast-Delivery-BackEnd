@@ -3,6 +3,7 @@ package com.fastDelivery.service;
 import com.fastDelivery.dto.request.ClientReqDTO;
 import com.fastDelivery.dto.response.ClientResDTO;
 import com.fastDelivery.dto.response.LoginResDTO;
+import com.fastDelivery.exception.ExistEmailDBException;
 import com.fastDelivery.exception.LoginException;
 import com.fastDelivery.entities.Client;
 import com.fastDelivery.mapper.ClientMapper;
@@ -15,6 +16,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -57,6 +59,15 @@ public class AuthentificationService {
         return clientMapper.froModelToRes(client);
     }
 
+    public boolean verifyEmailInDB(String email) throws ExistEmailDBException {
+        List<Client> client = clientRepository.findByEmailIgnoreCase(email);
+        if (!client.isEmpty()) {
+            log.error("Email est déjà consomé ");
+            throw new ExistEmailDBException();
+        }
+        return true;
+    }
+
     public boolean verifyEmailExists(String email) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
@@ -87,4 +98,6 @@ public class AuthentificationService {
     public boolean verifyOtp(String email, String otp) {
         return otpStorage.containsKey(email) && otpStorage.get(email).equals(otp);
     }
+
+
 }
