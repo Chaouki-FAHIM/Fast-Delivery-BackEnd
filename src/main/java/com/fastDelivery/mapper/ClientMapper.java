@@ -12,34 +12,35 @@ public class ClientMapper implements IMapper<Client, ClientResDTO, ClientReqDTO>
 
     @Override
     public Client fromReqToModel(ClientReqDTO clientReqDTO) {
-        return Client.builder()
-                .email(clientReqDTO.getEmail())
-                .username(clientReqDTO.getNom().toLowerCase()+"_"+clientReqDTO.getPrenom().toLowerCase())
-                .password(clientReqDTO.getPassword())
-                .nom(clientReqDTO.getNom())
-                .prenom(clientReqDTO.getPrenom())
-                .ville(clientReqDTO.getVille())
-                .CIN(clientReqDTO.getCin())
-                .numeroTelephone(clientReqDTO.getNumeroTelephone())
-                .dateCreation(new Date())
-                .rib(clientReqDTO.getRib())
-                .banque(clientReqDTO.getDenominationBanque())
-                .build();
+        return new Client(
+                clientReqDTO.getNom(),
+                clientReqDTO.getPrenom(),
+                clientReqDTO.getVille(),
+                clientReqDTO.getAdresseLocale(),
+                clientReqDTO.getNumeroTelephone(),
+                clientReqDTO.getEmail(),
+                clientReqDTO.getPassword(),
+                clientReqDTO.getNom().toLowerCase()+ "_"+clientReqDTO.getPrenom().toLowerCase(),
+                clientReqDTO.getCin(),
+                clientReqDTO.getRib(),
+                clientReqDTO.getDenominationBanque()
+        );
     }
 
     @Override
-    public ClientResDTO froModelToRes(Client client) {
-        return ClientResDTO.builder()
-                .idClient(client.getIdClient())
-                .emailClient(client.getEmail())
-                .nom(client.getNom())
-                .prenom(client.getPrenom())
-                .ville(client.getVille())
-                .cin(client.getCIN())
-                .numeroTelephone(client.getNumeroTelephone())
-                .dateCreationClient(client.getDateCreation())
-                .rib(client.getRib())
-                .denominationBanque(client.getBanque())
-                .build();
+    public ClientResDTO fromModelToRes(Client client) {
+        return  new ClientResDTO(
+                client.getIdPersonne(),
+                client.getEmail(),
+                client.getDateCreation(),
+                client.getNom(),
+                client.getPrenom(),
+                client.getVille(),
+                client.getAdresseLocale(),
+                client.getNumeroTelephone(),
+                client.getCIN(),
+                client.getRib(),
+                client.getBanque()
+        );
     }
 }

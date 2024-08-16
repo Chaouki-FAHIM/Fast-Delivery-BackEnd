@@ -3,11 +3,11 @@ package com.fastDelivery.service;
 import com.fastDelivery.dto.request.ClientReqDTO;
 import com.fastDelivery.dto.response.ClientResDTO;
 import com.fastDelivery.dto.response.LoginResDTO;
-import com.fastDelivery.exception.ExistEmailDBException;
-import com.fastDelivery.exception.LoginException;
+import com.fastDelivery.exception.*;
 import com.fastDelivery.entities.Client;
 import com.fastDelivery.mapper.ClientMapper;
 import com.fastDelivery.repo.ClientRepository;
+import com.fastDelivery.validation.IValidation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service("auth_service")
 @Slf4j
@@ -31,6 +33,10 @@ public class AuthentificationService {
     @Autowired
     @Qualifier("client_mapper")
     private ClientMapper clientMapper;
+
+    @Autowired
+    @Qualifier("client_validation")
+    private IValidation<ClientReqDTO> clientValidation;
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -50,13 +56,15 @@ public class AuthentificationService {
                 .build();
     }
 
-    public ClientResDTO register(ClientReqDTO clientReqDTO) {
+    public ClientResDTO register(ClientReqDTO clientReqDTO) throws NullRequestDataException, NotEmailException, BadPasswordException, BadCinException {
+
+        clientValidation.toCreate(clientReqDTO);
 
         Client client = clientMapper.fromReqToModel(clientReqDTO);
 
         clientRepository.save(client);
 
-        return clientMapper.froModelToRes(client);
+        return clientMapper.fromModelToRes(client);
     }
 
     public boolean verifyEmailInDB(String email) throws ExistEmailDBException {

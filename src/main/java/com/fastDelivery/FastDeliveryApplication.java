@@ -26,19 +26,19 @@ public class FastDeliveryApplication {
 	CommandLineRunner initDB() {
 		return args -> {
 
-			Client client = Client.builder()
-					.email("hamza@gmail.com")
-					.password("7814PAOIL")
-					.username("hamza_baihi")
-					.dateCreation(new Date())
-					.prenom("Hamza")
-					.nom("BAIHI")
-					.ville("Meknès")
-					.numeroTelephone("068755845548")
-					.CIN("JH875410")
-					.rib("123456789123456789123456")
-					.banque("CIH BANK")
-					.build();
+			Client client = new Client(
+					"BAIHI",
+					"Hamza",
+					"مكناس | Meknès",
+					"Lamsalla 03",
+					"068755845548",
+					"hamza@gmail.com",
+					"7814PAOIL",
+					"hamza_baihi",
+					"JH875410",
+					"123456789123456789123456",
+					"CIH BANK");
+
 			clientRepository.save(client);
 		};
 	}
