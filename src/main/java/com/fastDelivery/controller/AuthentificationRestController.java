@@ -1,8 +1,7 @@
 package com.fastDelivery.controller;
 
 import com.fastDelivery.dto.request.ClientReqDTO;
-import com.fastDelivery.exception.ExistEmailDBException;
-import com.fastDelivery.exception.LoginException;
+import com.fastDelivery.exception.*;
 import com.fastDelivery.service.AuthentificationService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -35,7 +34,9 @@ public class AuthentificationRestController {
     @PostMapping("/register")
     public ResponseEntity<?> register (@RequestBody @Valid ClientReqDTO client) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(authentificationService.register(client));
+            return ResponseEntity.status(HttpStatus.CREATED).body(authentificationService.register(client));
+        } catch (NullRequestDataException | NotEmailException | BadPasswordException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }

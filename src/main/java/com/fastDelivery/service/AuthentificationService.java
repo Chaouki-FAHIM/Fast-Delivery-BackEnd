@@ -3,11 +3,13 @@ package com.fastDelivery.service;
 import com.fastDelivery.dto.request.ClientReqDTO;
 import com.fastDelivery.dto.response.ClientResDTO;
 import com.fastDelivery.dto.response.LoginResDTO;
-import com.fastDelivery.exception.ExistEmailDBException;
-import com.fastDelivery.exception.LoginException;
+import com.fastDelivery.entities.Admin;
+import com.fastDelivery.exception.*;
 import com.fastDelivery.entities.Client;
 import com.fastDelivery.mapper.ClientMapper;
+import com.fastDelivery.repo.AdminRepository;
 import com.fastDelivery.repo.ClientRepository;
+import com.fastDelivery.validation.IValidation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service("auth_service")
 @Slf4j
@@ -33,6 +37,14 @@ public class AuthentificationService {
     private ClientMapper clientMapper;
 
     @Autowired
+    @Qualifier("client_validation")
+    private IValidation<ClientReqDTO,Long> clientValidation;
+
+    @Autowired
+    @Qualifier("admin_repo")
+    private  AdminRepository adminRepository;
+
+    @Autowired
     private JavaMailSender javaMailSender;
 
     private Map<String, String> otpStorage = new HashMap<>();
@@ -40,23 +52,34 @@ public class AuthentificationService {
     public LoginResDTO login(String email, String password) throws LoginException {
         Client client = clientRepository.findByEmailAndPassword(email,password);
 
-        if (client == null) {
-            log.error("Client est non trouvé pour le traitement de login");
+        Admin admin = adminRepository.findByEmailAndPassword(email,password);
+
+        if (client == null && admin == null) {
+            log.error("User est non trouvé pour le traitement de login");
             throw new LoginException();
         }
 
+        if(client != null)
+            return LoginResDTO.builder()
+                    .username(client.getUsername())
+                    .role(client.getRole())
+                    .build();
+
         return LoginResDTO.builder()
-                .username(client.getUsername())
+                .username(admin.getUsername())
+                .role(admin.getRole())
                 .build();
     }
 
-    public ClientResDTO register(ClientReqDTO clientReqDTO) {
+    public ClientResDTO register(ClientReqDTO clientReqDTO) throws NullRequestDataException, NotEmailException, BadPasswordException, BadCinException, RededicationUserException, BadMontantException, NotFoundIDException {
+
+        clientValidation.toCreate(clientReqDTO);
 
         Client client = clientMapper.fromReqToModel(clientReqDTO);
 
         clientRepository.save(client);
 
-        return clientMapper.froModelToRes(client);
+        return clientMapper.fromModelToRes(client);
     }
 
     public boolean verifyEmailInDB(String email) throws ExistEmailDBException {
@@ -98,6 +121,5 @@ public class AuthentificationService {
     public boolean verifyOtp(String email, String otp) {
         return otpStorage.containsKey(email) && otpStorage.get(email).equals(otp);
     }
-
 
 }

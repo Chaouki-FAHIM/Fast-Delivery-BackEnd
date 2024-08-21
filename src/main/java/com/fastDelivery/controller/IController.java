@@ -6,7 +6,7 @@ public interface IController<DTO,ID> {
 
     ResponseEntity<?> create (DTO dto);
     ResponseEntity<?> getById (ID id);
-    ResponseEntity<?> getAll ();
+    ResponseEntity<?> getAll (int pageNumber, int limitItem);
     ResponseEntity<?> update (DTO dto, ID id);
     ResponseEntity<?> delete (ID id);
 

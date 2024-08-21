@@ -1,6 +1,7 @@
 package com.fastDelivery.dto.request;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -8,36 +9,22 @@ import lombok.*;
 @Setter
 @Getter
 @ToString
-@Builder
-public class ClientReqDTO {
+@Schema(description = "Client request DTO")
+public class ClientReqDTO  extends PersonneReqDTO {
 
-    @NotBlank(message = "Password est obligatoire")
-    @Size(min = 8, message = "Password excepte juste 8 caractère et plus")
-    private String password;
-
-    @NotBlank(message = "Email est obligatoire")
-    @Email(message = "Email excepte juste son format")
-    private String email;
-
-    @NotBlank(message = "Nom est obligatoire")
-    private String nom;
-
-    @NotBlank(message = "Prénom est obligatoire")
-    private String prenom;
-
-    @NotBlank(message = "Ville est obligatoire")
-    private String ville;
-
-    @NotBlank(message = "Numero téléphone est obligatoire")
-    private String numeroTelephone;
-
-    @NotBlank(message = "CIN est obligatoire")
+    protected String password;
+    protected String email;
     private String cin;
-
-    @NotBlank(message = "RIB est obligatoire")
     private String rib;
-
-    @NotBlank(message = "Dénomination de banque est obligatoire")
     private String denominationBanque;
 
+
+    public ClientReqDTO(String nom, String prenom, String ville, String adresseLocale, String numeroTelephone, String password, String denominationBanque, String rib, String cin, String email) {
+        super(nom, prenom, ville, adresseLocale, numeroTelephone);
+        this.password = password;
+        this.denominationBanque = denominationBanque;
+        this.rib = rib;
+        this.cin = cin;
+        this.email = email;
+    }
 }
