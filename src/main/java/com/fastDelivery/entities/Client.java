@@ -1,6 +1,10 @@
 package com.fastDelivery.entities;
 
+<<<<<<< HEAD
 import com.fastDelivery.enumerator.Role;
+=======
+import com.fastDelivery.model.Role;
+>>>>>>> cda643eaa56729a0317e3646aaca7c86d30b8179
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -42,11 +46,19 @@ public class Client extends Personne {
     @NotNull(message = "Nom de banque est obligatoire")
     private String banque;
 
+<<<<<<< HEAD
     public Client(String nom, String prenom, String ville, String adresseLocale, String numeroTelephone, String email, String password, String CIN, String rib, String banque) {
         super( new Date(), nom, prenom, ville, adresseLocale, numeroTelephone, Role.CLIENT);
         this.email = email;
         this.password = password;
         this.username = nom.toLowerCase()+ "_" +prenom.toLowerCase();
+=======
+    public Client(String nom, String prenom, String ville, String adresseLocale, String numeroTelephone, String email, String password, String username, String CIN, String rib, String banque) {
+        super( new Date(), nom, prenom, ville, adresseLocale, numeroTelephone, Role.CLIENT);
+        this.email = email;
+        this.password = password;
+        this.username = username;
+>>>>>>> cda643eaa56729a0317e3646aaca7c86d30b8179
         this.CIN = CIN;
         this.rib = rib;
         this.banque = banque;

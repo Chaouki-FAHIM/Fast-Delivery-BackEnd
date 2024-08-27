@@ -1,7 +1,11 @@
 package com.fastDelivery.entities;
 
 
+<<<<<<< HEAD
 import com.fastDelivery.enumerator.Role;
+=======
+import com.fastDelivery.model.Role;
+>>>>>>> cda643eaa56729a0317e3646aaca7c86d30b8179
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -10,6 +14,10 @@ import lombok.*;
 
 import java.util.Date;
 
+<<<<<<< HEAD
+=======
+@AllArgsConstructor
+>>>>>>> cda643eaa56729a0317e3646aaca7c86d30b8179
 @NoArgsConstructor
 @Setter
 @Getter

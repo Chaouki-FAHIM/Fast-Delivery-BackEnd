@@ -55,6 +55,10 @@ public class FastDeliveryApplication {
 					"068755845548",
 					"hamza@gmail.com",
 					"7814PAOIL",
+<<<<<<< HEAD
+=======
+					"hamza_baihi",
+>>>>>>> cda643eaa56729a0317e3646aaca7c86d30b8179
 					"JH875410",
 					"123456789123456789123456",
 					"CIH BANK");

@@ -32,7 +32,11 @@ public class ClientRestController implements IController<ClientReqDTO,Long> {
        try {
            return ResponseEntity.status(HttpStatus.OK).body(clientService.getById(id));
        } catch (NotFoundIDException e) {
+<<<<<<< HEAD
            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error",e.getMessage()));
+=======
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error",Map.of("error",Map.of("error",e.getMessage()))));
+>>>>>>> cda643eaa56729a0317e3646aaca7c86d30b8179
        } catch (Exception e) {
            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error",e.getMessage()));
        }
@@ -40,7 +44,11 @@ public class ClientRestController implements IController<ClientReqDTO,Long> {
 
     @Override
     @GetMapping
+<<<<<<< HEAD
     public ResponseEntity<?> getAll(@RequestParam(defaultValue = "1") int pageNumber,@RequestParam(defaultValue = "10") int limitClient) {
+=======
+    public ResponseEntity<?> getAll(@RequestParam(defaultValue = "1") int pageNumber,@RequestParam(defaultValue = "15") int limitClient) {
+>>>>>>> cda643eaa56729a0317e3646aaca7c86d30b8179
         try {
             return ResponseEntity.status(HttpStatus.OK).body(clientService.getAll(pageNumber,limitClient));
         } catch (Exception e) {

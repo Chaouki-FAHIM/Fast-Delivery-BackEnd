@@ -34,7 +34,11 @@ public class AuthentificationRestController {
     @PostMapping("/register")
     public ResponseEntity<?> register (@RequestBody @Valid ClientReqDTO client) {
         try {
+<<<<<<< HEAD
             return ResponseEntity.status(HttpStatus.CREATED).body(authentificationService.register(client));
+=======
+            return ResponseEntity.status(HttpStatus.OK).body(authentificationService.register(client));
+>>>>>>> cda643eaa56729a0317e3646aaca7c86d30b8179
         } catch (NullRequestDataException | NotEmailException | BadPasswordException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {

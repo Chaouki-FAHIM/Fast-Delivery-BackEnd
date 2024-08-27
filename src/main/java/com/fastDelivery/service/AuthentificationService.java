@@ -3,7 +3,10 @@ package com.fastDelivery.service;
 import com.fastDelivery.dto.request.ClientReqDTO;
 import com.fastDelivery.dto.response.ClientResDTO;
 import com.fastDelivery.dto.response.LoginResDTO;
+<<<<<<< HEAD
 import com.fastDelivery.entities.Admin;
+=======
+>>>>>>> cda643eaa56729a0317e3646aaca7c86d30b8179
 import com.fastDelivery.exception.*;
 import com.fastDelivery.entities.Client;
 import com.fastDelivery.mapper.ClientMapper;
@@ -38,11 +41,15 @@ public class AuthentificationService {
 
     @Autowired
     @Qualifier("client_validation")
+<<<<<<< HEAD
     private IValidation<ClientReqDTO,Long> clientValidation;
 
     @Autowired
     @Qualifier("admin_repo")
     private  AdminRepository adminRepository;
+=======
+    private IValidation<ClientReqDTO> clientValidation;
+>>>>>>> cda643eaa56729a0317e3646aaca7c86d30b8179
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -71,7 +78,11 @@ public class AuthentificationService {
                 .build();
     }
 
+<<<<<<< HEAD
     public ClientResDTO register(ClientReqDTO clientReqDTO) throws NullRequestDataException, NotEmailException, BadPasswordException, BadCinException, RededicationUserException, BadMontantException, NotFoundIDException {
+=======
+    public ClientResDTO register(ClientReqDTO clientReqDTO) throws NullRequestDataException, NotEmailException, BadPasswordException, BadCinException {
+>>>>>>> cda643eaa56729a0317e3646aaca7c86d30b8179
 
         clientValidation.toCreate(clientReqDTO);
 

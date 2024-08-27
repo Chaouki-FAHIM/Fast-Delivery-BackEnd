@@ -1,5 +1,6 @@
 package com.fastDelivery.validation;
 
+<<<<<<< HEAD
 
 import com.fastDelivery.dto.request.PersonneReqDTO;
 import com.fastDelivery.exception.*;
@@ -40,4 +41,14 @@ public interface IValidation<Req,ID> {
 
     void toCreate(Req object) throws BadPasswordException, NullRequestDataException, NotEmailException, BadCinException, RededicationUserException, BadMontantException, NotFoundIDException;
     void toUpdate(Req object,ID id) throws NullRequestDataException, NotEmailException, BadCinException, RededicationUserException, BadMontantException, NotFoundIDException;
+=======
+import com.fastDelivery.exception.BadCinException;
+import com.fastDelivery.exception.BadPasswordException;
+import com.fastDelivery.exception.NotEmailException;
+import com.fastDelivery.exception.NullRequestDataException;
+
+public interface IValidation<TD> {
+    void toCreate(TD object) throws BadPasswordException, NullRequestDataException, NotEmailException, BadCinException;
+    void toUpdate(TD object) throws NullRequestDataException, NotEmailException, BadCinException;
+>>>>>>> cda643eaa56729a0317e3646aaca7c86d30b8179
 }

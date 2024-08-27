@@ -30,7 +30,11 @@ public class ClientServiceImpl implements IService<ClientReqDTO, ClientResDTO,Lo
 
     @Autowired
     @Qualifier("client_validation")
+<<<<<<< HEAD
     private IValidation<ClientReqDTO,Long> clientValidation;
+=======
+    private IValidation<ClientReqDTO> clientValidation;
+>>>>>>> cda643eaa56729a0317e3646aaca7c86d30b8179
 
     @Autowired
     @Qualifier("client_repo")
@@ -41,7 +45,11 @@ public class ClientServiceImpl implements IService<ClientReqDTO, ClientResDTO,Lo
     private IMapper<Client, ClientResDTO, ClientReqDTO> clientMapper;
 
     @Override
+<<<<<<< HEAD
     public ClientResDTO create(ClientReqDTO clientReqDTO)  {
+=======
+    public ClientResDTO create(ClientReqDTO clientReqDTO) throws NullRequestDataException {
+>>>>>>> cda643eaa56729a0317e3646aaca7c86d30b8179
         return null;
     }
 
@@ -84,12 +92,49 @@ public class ClientServiceImpl implements IService<ClientReqDTO, ClientResDTO,Lo
         response.put("metadata", metaData);
 
         List<ClientResDTO> clientResDTOList = clients.stream().map(clientMapper::fromModelToRes).toList();
+<<<<<<< HEAD
 
         if(clientResDTOList.isEmpty()) response.put("data",null);
         else response.put("data",clientResDTOList);
 
         log.info("End : Get all Client ");
         return response;
+=======
+        response.put("data",clientResDTOList);
+
+        log.info("End : Get all Client ");
+        return response;
+    }
+
+    @Override
+    public ClientResDTO update(ClientReqDTO clientReqDTO, Long id) throws NullRequestDataException, BadPasswordException, NotEmailException, NotFoundIDException, BadCinException {
+
+        log.info("Start : Update Client by id "+id);
+
+        // validation data of client for update
+        clientValidation.toUpdate(clientReqDTO);
+
+        // validation id
+        Client client = recieveClient(id);
+
+        // process to update
+        client.setNom(clientReqDTO.getNom());
+        client.setPrenom(clientReqDTO.getPrenom());
+        client.setNumeroTelephone(clientReqDTO.getNumeroTelephone());
+        client.setEmail(clientReqDTO.getEmail());
+        client.setVille(clientReqDTO.getVille());
+        client.setAdresseLocale(clientReqDTO.getAdresseLocale());
+        client.setCIN(clientReqDTO.getCin());
+        client.setRib(clientReqDTO.getRib());
+        client.setBanque(clientReqDTO.getDenominationBanque());
+
+        // save update in database
+        clientRepository.save(client);
+
+        log.info("End : Update Client by id "+id);
+
+        return clientMapper.fromModelToRes(client);
+>>>>>>> cda643eaa56729a0317e3646aaca7c86d30b8179
     }
 
     @Override
